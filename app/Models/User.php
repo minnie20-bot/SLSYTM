@@ -46,4 +46,31 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    static public function getSingle($id)
+    {
+        return User::find($id);
+    }
+
+    static public function getSchool()
+    {
+        return self::select('*')
+            ->where('is_admin', '=', 3)
+            ->where('is_delete', '=', 0)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    public function getProfile()
+    {
+        if(!empty($this->profile_pic) && file('upload/profile/'.$this->profile_pic))
+            {
+                return url('upload/profile/'.$this->profile_pic);
+            }
+            else
+            {
+                return "";
+            }
+    }
+
 }

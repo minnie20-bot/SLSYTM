@@ -25,5 +25,5 @@
 @endsection
 
 @section('content')
-<script type="text/javascript" src="{{ asset('public/js/demo_tables.js') }}"></script>
+
 @endsection
