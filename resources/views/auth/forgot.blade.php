@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="body-full-height">
+<html lang="en">
     <head>        
         <!-- META SECTION -->
         <title>Login</title>            

@@ -24,7 +24,8 @@
                     <div class="login-title"><strong>Log In</strong> to your account</div>
                     <form action="" class="form-horizontal" method="post">
                         {{ csrf_field() }}
-                    <div class="form-group">
+                        @include('message')
+                        <div class="form-group">
                         <div class="col-md-12">
                             <input type="email" class="form-control" name="email" required placeholder="E-mail"/>
                         </div>

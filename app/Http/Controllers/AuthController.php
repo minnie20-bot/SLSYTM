@@ -32,6 +32,5 @@ public function forgot()
 {
     return view('auth.forgot');
 }
-
  }
 
