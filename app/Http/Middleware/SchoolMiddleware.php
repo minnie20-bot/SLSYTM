@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AuthCommonMiddleware
+class SchoolMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,12 +18,18 @@ class AuthCommonMiddleware
     {
         if(!empty(Auth::check()))
             {
-                return $next($request);
+                if(Auth::user()->is_admin == 3)
+                    {
+                        return $next($request);
+                    }
+                    else
+                    {
+                        Auth::logout();
+                        return redirect(url(''));
+                    }
             }
-        
         else
             {
-                Auth::logout();
                 return redirect(url(''));
             }
     }

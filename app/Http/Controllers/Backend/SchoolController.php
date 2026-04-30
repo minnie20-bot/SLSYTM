@@ -104,7 +104,14 @@ class SchoolController extends Controller
         return redirect('panel/school')->with('success', "School Successfully updated");
     }
 
-    
+    public function delete_school($id)
+    {
+        $user = User::getSingle($id);  
+        $user->is_delete = 1;
+        $user->save(); 
+
+        return redirect('panel/school')->with('success', "School Successfully deleted");
+    }
     
     
     
