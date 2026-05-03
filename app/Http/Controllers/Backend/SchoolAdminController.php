@@ -11,23 +11,24 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 
-class SchoolController extends Controller
+class SchoolAdminController extends Controller
 {
-    public function school_list()
+    public function school_admin_list()
     {
-        $data['getSchool'] = User::getSchool();
-        $data['meta_title'] = "school";
+        $data['getRecord'] = User::getSchoolAdmin(Auth::User()->id, Auth::User()->is_admin);
+        $data['meta_title'] = "School Admin";
 
-        return view('backend.school.list', $data);
+        return view('backend.school_admin.list', $data);
     }
 
-    public function create_school()
+    public function create_school_admin()
     {
-        $data['meta_title'] = "Create School";
-        return view('backend.school.create', $data);
+        $data['getSchool'] = User::getSchoolAll();
+        $data['meta_title'] = "Create School Admin";
+        return view('backend.school_admin.create', $data);
     }
 
-    public function insert_school(Request $request)
+    public function insert_school_admin(Request $request)
     {
         request()->validate([
             'email' => 'required|email|unique:users',
@@ -40,8 +41,14 @@ class SchoolController extends Controller
         $user->password = Hash::make($request->password);
         $user->address = trim($request->address);
         $user->status = trim($request->status);
-        $user->is_admin = 3;
-        $user->created_by_id = Auth::user()->id;
+        $user->is_admin = 4;
+
+        if (Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2) {
+            $user->created_by_id    = $request->school_id;
+        } else {
+            $user->created_by_id    = Auth::user()->id;
+        }
+
         $user->save();
 
         if (!empty($request->file('profile_pic'))) {
@@ -49,6 +56,7 @@ class SchoolController extends Controller
             $file = $request->file('profile_pic');
             $randomStr = date('Ymdhis') . Str::random(10);
             $filename = strtolower($randomStr) . '.' . $ext;
+
             $file->move(public_path('upload/profile/'), $filename);
 
             $user->profile_pic = $filename;
@@ -56,23 +64,23 @@ class SchoolController extends Controller
         }
 
 
-        return redirect('panel/school')->with('success', "School Successfully created");
+        return redirect('panel/school_admin')->with('success', "School Admin Successfully created");
     }
 
-    public function edit_school($id)
+    public function edit_school_admin($id)
     {
-        $data['getSchool'] = User::getSingle($id);
-        $data['meta_title'] = " Edit School";
-        return view('backend.school.edit', $data);
+        $data['getRecord'] = User::getSingle($id);
+        $data['meta_title'] = " Edit School Admin";
+        return view('backend.school_admin.edit', $data);
     }
 
-    public function update_school($id, Request $request)
+    public function update_school_admin($id, Request $request)
     {
         $request->validate([
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($id),
+                Rule::unique('users', 'email')->ignore($id, 'id'),
             ],
         ]);
 
@@ -80,11 +88,10 @@ class SchoolController extends Controller
         $user = User::getSingle($id);
         $user->name = trim($request->name);
         $user->email = trim($request->email);
-        if(!empty($request->password))
-            {
-                $user->password = Hash::make($request->password);
-            }
-        
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+
         $user->address = trim($request->address);
         $user->status = trim($request->status);
         $user->save();
@@ -94,6 +101,7 @@ class SchoolController extends Controller
             $file = $request->file('profile_pic');
             $randomStr = date('Ymdhis') . Str::random(10);
             $filename = strtolower($randomStr) . '.' . $ext;
+
             $file->move(public_path('upload/profile/'), $filename);
 
             $user->profile_pic = $filename;
@@ -101,20 +109,15 @@ class SchoolController extends Controller
         }
 
 
-        return redirect('panel/school')->with('success', "School Successfully updated");
+        return redirect('panel/school_admin')->with('success', "School Admin Successfully updated");
     }
 
-    public function delete_school($id)
+    public function delete_school_admin($id)
     {
-        $user = User::getSingle($id);  
+        $user = User::getSingle($id);
         $user->is_delete = 1;
-        $user->save(); 
+        $user->save();
 
-        return redirect('panel/school')->with('success', "School Successfully deleted");
+        return redirect('panel/school_admin')->with('success', "School Admin Successfully deleted");
     }
-    
-    
-    
-    
-
 }

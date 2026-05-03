@@ -17,16 +17,23 @@ class AuthController extends Controller
  }
 
  public function auth_login(Request $request)
- {
-    if(Auth::attempt(['email' => $request->email, 'password' => $request->password, 'is_delete' => 0], true))
-        {
-            return redirect('panel/dashboard');
-        }
-        else
-        {
-            return redirect()->back()->with('error', "Please enter current email and password");
-        }
- }
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    if (Auth::attempt([
+        'email' => $request->email,
+        'password' => $request->password,
+        'is_delete' => 0
+    ], true)) {
+
+        return redirect('panel/dashboard');
+    }
+
+    return redirect()->back()->with('error', "Please enter correct email and password");
+}
 
 public function forgot()
 {

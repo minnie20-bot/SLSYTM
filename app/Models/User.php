@@ -51,7 +51,16 @@ class User extends Authenticatable
         ];
     }
 
-    
+    public function getProfile()
+    {
+        if (!empty($this->profile_pic) && file_exists(public_path('upload/profile/' . $this->profile_pic))) {
+            return url('upload/profile/' . $this->profile_pic);
+        }
+
+        return '';
+    }
+
+
 
     static public function getSingle($id)
     {
@@ -61,41 +70,34 @@ class User extends Authenticatable
     static public function getAdmin()
     {
         $return = self::select('*');
-            if(!empty(Request::get('id')))
-            {
-                $return = $return->where('id', '=', Request::get('id'));
+        if (!empty(Request::get('id'))) {
+            $return = $return->where('id', '=', Request::get('id'));
+        }
+
+        if (!empty(Request::get('is_admin'))) {
+            $return = $return->where('is_admin', '=', Request::get('is_admin'));
+        }
+
+        if (!empty(Request::get('name'))) {
+            $return = $return->where('name', 'like', '%' . Request::get('name') . '%');
+        }
+
+        if (!empty(Request::get('email'))) {
+            $return = $return->where('email', 'like', '%' . Request::get('email') . '%');
+        }
+
+        if (!empty(Request::get('address'))) {
+            $return = $return->where('address', 'like', '%' . Request::get('address') . '%');
+        }
+
+        if (!empty(Request::get('status'))) {
+            $status = Request::get('status');
+            if ($status == 100) {
+                $status = 0;
             }
 
-            if(!empty(Request::get('is_admin')))
-            {
-                $return = $return->where('is_admin', '=', Request::get('is_admin'));
-            }
-
-            if(!empty(Request::get('name')))
-            {
-                $return = $return->where('name', 'like', '%' .Request::get('name'). '%');
-            }
-
-            if(!empty(Request::get('email')))
-            {
-                $return = $return->where('email', 'like', '%' .Request::get('email'). '%');
-            }
-
-            if(!empty(Request::get('address')))
-            {
-                $return = $return->where('address', 'like', '%' .Request::get('address'). '%');
-            }
-
-            if(!empty(Request::get('status')))
-            {
-                $status = Request::get('status');
-                if($status == 100)
-                {
-                    $status = 0;
-                }
-
-                $return->where('status', $status);
-            }
+            $return->where('status', $status);
+        }
 
         $return = $return->whereIn('is_admin', array('1', '2'))
             ->where('is_delete', '=', 0)
@@ -107,36 +109,30 @@ class User extends Authenticatable
     static public function getSchool()
     {
         $return = self::select('*');
-            if(!empty(Request::get('id')))
-            {
-                $return = $return->where('id', '=', Request::get('id'));
+        if (!empty(Request::get('id'))) {
+            $return = $return->where('id', '=', Request::get('id'));
+        }
+
+        if (!empty(Request::get('name'))) {
+            $return = $return->where('name', 'like', '%' . Request::get('name') . '%');
+        }
+
+        if (!empty(Request::get('email'))) {
+            $return = $return->where('email', 'like', '%' . Request::get('email') . '%');
+        }
+
+        if (!empty(Request::get('address'))) {
+            $return = $return->where('address', 'like', '%' . Request::get('address') . '%');
+        }
+
+        if (!empty(Request::get('status'))) {
+            $status = Request::get('status');
+            if ($status == 100) {
+                $status = 0;
             }
 
-            if(!empty(Request::get('name')))
-            {
-                $return = $return->where('name', 'like', '%' .Request::get('name'). '%');
-            }
-
-            if(!empty(Request::get('email')))
-            {
-                $return = $return->where('email', 'like', '%' .Request::get('email'). '%');
-            }
-
-            if(!empty(Request::get('address')))
-            {
-                $return = $return->where('address', 'like', '%' .Request::get('address'). '%');
-            }
-
-            if(!empty(Request::get('status')))
-            {
-                $status = Request::get('status');
-                if($status == 100)
-                {
-                    $status = 0;
-                }
-
-                $return->where('status', $status);
-            }
+            $return->where('status', $status);
+        }
 
         $return = $return->where('is_admin', '=', 3)
             ->where('is_delete', '=', 0)
@@ -145,16 +141,117 @@ class User extends Authenticatable
         return $return;
     }
 
-    public function getProfile()
+    static public function getSchoolAll()
     {
-        if(!empty($this->profile_pic) && file('upload/profile/'.$this->profile_pic))
-            {
-                return url('upload/profile/'.$this->profile_pic);
-            }
-            else
-            {
-                return "";
-            }
+        return self::select('*')
+            ->where('is_admin', '=', 3)
+            ->where('is_delete', '=', 0)
+            ->where('status', '=', 1)
+            ->orderBy('id', 'desc')
+            ->get();
     }
 
+    static public function getTeacher($user_id, $user_type)
+    {
+        $return = self::select('*');
+
+        if (!empty(Request::get('id'))) {
+            $return = $return->where('id', '=', Request::get('id'));
+        }
+
+        if (!empty(Request::get('name'))) {
+            $return = $return->where('name', 'like', '%' . Request::get('name') . '%');
+        }
+
+        if (!empty(Request::get('email'))) {
+            $return = $return->where('email', 'like', '%' . Request::get('email') . '%');
+        }
+
+        if (!empty(Request::get('address'))) {
+            $return = $return->where('address', 'like', '%' . Request::get('address') . '%');
+        }
+
+        if (!empty(Request::get('status'))) {
+            $status = Request::get('status');
+            if ($status == 100) {
+                $status = 0;
+            }
+
+            $return->where('status', $status);
+        }
+
+        if ($user_type == 3) {
+            $return = $return->where('created_by_id', '=', $user_id);
+        }
+
+        $return = $return->where('is_admin', '=', 5)
+
+            ->where('is_delete', '=', 0)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        return $return;
+    }
+    
+    static public function getSchoolAdmin($user_id, $user_type)
+    {
+        $return = self::select('*');
+
+        if (!empty(Request::get('id'))) {
+            $return = $return->where('id', '=', Request::get('id'));
+        }
+
+        if (!empty(Request::get('name'))) {
+            $return = $return->where('name', 'like', '%' . Request::get('name') . '%');
+        }
+
+        if (!empty(Request::get('last_name'))) {
+            $return = $return->where('last_name', 'like', '%' . Request::get('last_name') . '%');
+        }
+
+        if (!empty(Request::get('email'))) {
+            $return = $return->where('email', 'like', '%' . Request::get('email') . '%');
+        }
+
+        if (!empty(Request::get('gender'))) {
+            $return = $return->where('gender', '=', Request::get('gender'));
+        }
+
+        if (!empty(Request::get('status'))) {
+            $status = Request::get('status');
+            if ($status == 100) {
+                $status = 0;
+            }
+
+            $return->where('status', $status);
+        }
+
+        if ($user_type == 3) {
+            $return = $return->where('created_by_id', '=', $user_id);
+        }
+
+        $return = $return->where('is_admin', '=', 4)
+
+            ->where('is_delete', '=', 0)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        return $return;
+    }
+
+    
+
+    public function getCreatedBy()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
+    }
+
+
+
+    public function edit_teacher($id)
+    {
+        if (!empty($this->profile_pic) && file('upload/profile/' . $this->profile_pic)) {
+            return url('upload/profile/' . $this->profile_pic);
+        } else {
+            return "";
+        }
+    }
 }

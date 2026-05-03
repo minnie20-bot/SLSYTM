@@ -24,36 +24,59 @@
             </div>
         </li>
 
-        <li class="{{ Request::segment(2) ==  'dashboard' ? 'active' : '' }}">
+        <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
             <a href="{{ url('panel/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
         </li>
 
-    @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)  
+        @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)
 
-        <li class="{{ Request::segment(2) == 'admin' ? 'active' : '' }}">
-            <a href="{{ url('panel/admin') }}"><span class="fa fa-book"></span> <span class="xn-text">Admin</span></a>
+        <li class="{{ (Request::segment(2) == 'admin') ? 'active' : '' }}">
+            <a href="{{ url('panel/admin') }}"><span class="fa fa-user"></span> <span class="xn-text">Admin</span></a>
         </li>
 
-        <li class="{{ Request::segment(2) == 'school' ? 'active' : '' }}">
-            <a href="{{ url('panel/school') }}"><span class="fa fa-book"></span> <span class="xn-text">School</span></a>
+        <li class="{{ (Request::segment(2) == 'school') ? 'active' : '' }}">
+            <a href="{{ url('panel/school') }}"><span class="fa fa-building"></span> <span class="xn-text">School</span></a>
         </li>
 
-    @endif
+        @endif
 
-    @if(Auth::user()->is_admin == 3
-    )  
-        <li class="{{ Request::segment(2) == 'teacher' ? 'active' : '' }}">
-            <a href="{{ url('panel/teacher') }}"><span class="fa fa-book"></span> <span class="xn-text">Teacher</span></a>
+        @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2 || Auth::user()->is_admin == 3)
+
+        <li class="{{ (Request::segment(2) == 'school_admin') ? 'active' : '' }}">
+            <a href="{{ url('panel/school_admin') }}"><span class="fa fa-user"></span> <span class="xn-text">School Admin</span></a>
         </li>
 
-    @endif
+        <li class="{{ (Request::segment(2) == 'teacher') ? 'active' : '' }}">
+            <a href="{{ url('panel/teacher') }}"><span class="fa fa-user"></span> <span class="xn-text">Teacher</span></a>
+        </li>
+
+        <li class="{{ (Request::segment(2) == 'student') ? 'active' : '' }}">
+            <a href="{{ url('panel/student') }}"><span class="fa fa-user"></span> <span class="xn-text">Student</span></a>
+        </li>
+
+        @endif
+
+        @if(Auth::user()->is_admin == 3)
+
+        <li class="xn-openable {{ (Request::segment(2) == 'class' || Request::segment(2) == 'subject') ? 'active' : '' }}">
+            <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Academics</span></a>
+            <ul>
+                <li class="{{ (Request::segment(2) == 'class') ? 'active' : '' }}"><a href="{{ url('panel/class') }}"><span class="fa fa-random"></span> Class</a></li>
+
+                <li class="{{ (Request::segment(2) == 'subject') ? 'active' : '' }}"><a href="{{ url('panel/subject') }}"><span class="fa fa-random"></span> Subject</a></li>
+
+            </ul>
+        </li>
+
+        @endif
 
         <li class="xn-openable">
             <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
             <ul>
-                <li><a href="layout-boxed.html">List</a></li>
+                <li><a href="{{ url('panel/layout-boxed') }}">List</a></li>
             </ul>
         </li>
+
     </ul>
     <!-- END X-NAVIGATION -->
 </div>

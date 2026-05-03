@@ -15,17 +15,13 @@ class AuthCommonMiddleware
      * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        if(!empty(Auth::check()))
-            {
-                return $next($request);
-            }
-        
-        else
-            {
-                Auth::logout();
-                return redirect(url(''));
-            }
+{
+    if (Auth::check()) {
+        return $next($request);
     }
+
+    Auth::logout();
+    return redirect('/');
+}
 }
 

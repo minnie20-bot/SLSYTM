@@ -6,6 +6,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\SchoolController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\TeacherController;
+use App\Http\Controllers\Backend\SchoolAdminController;
+use App\Http\Controllers\Backend\ClassController;
+use App\Http\Controllers\Backend\SubjectController;
+use App\Http\Controllers\Backend\StudentController;
+
+
+
+
 
 
 
@@ -29,6 +38,7 @@ Route::group(['middleware' => 'common'], function () {
 });
 
 Route::group(['middleware' => 'admin'], function () {
+
     Route::get('panel/admin', [AdminController::class, 'admin_list']);
     Route::get('panel/admin/create', [AdminController::class, 'create_admin']);
     Route::post('panel/admin/create', [AdminController::class, 'insert_admin']); 
@@ -50,5 +60,41 @@ Route::group(['middleware' => 'admin'], function () {
 
 
 Route::group(['middleware' => 'school'], function () {
+
+    Route::get('panel/teacher', [TeacherController::class, 'teacher_list']);
+    Route::get('panel/teacher/create', [TeacherController::class, 'create_teacher']);
+    Route::post('panel/teacher/create', [TeacherController::class, 'insert_teacher']);
+    Route::get('panel/teacher/edit/{id}', [TeacherController::class, 'edit_teacher']);
+    Route::post('panel/teacher/edit/{id}', [TeacherController::class, 'update_teacher']);
+    Route::get('panel/teacher/delete/{id}', [TeacherController::class, 'delete_teacher']);
+
+    Route::get('panel/student', [StudentController::class, 'student_list']);
+    Route::get('panel/student/create', [StudentController::class, 'create_student']);
+    Route::post('panel/student/create', [StudentController::class, 'insert_student']);
+    // Route::get('panel/student/edit/{id}', [StudentController::class, 'edit_student']);
+    // Route::post('panel/student/edit/{id}', [StudentController::class, 'update_student']);
+    // Route::get('panel/student/delete/{id}', [StudentController::class, 'delete_student']);
+
+
+    Route::get('panel/school_admin', [SchoolAdminController::class, 'school_admin_list']);
+    Route::get('panel/school_admin/create', [SchoolAdminController::class, 'create_school_admin']);
+    Route::post('panel/school_admin/create', [SchoolAdminController::class, 'insert_school_admin']); 
+    Route::get('panel/school_admin/edit/{id}', [SchoolAdminController::class, 'edit_school_admin']);
+    Route::post('panel/school_admin/edit/{id}', [SchoolAdminController::class, 'update_school_admin']);
+    Route::get('panel/school_admin/delete/{id}', [SchoolAdminController::class, 'delete_school_admin']);
+
+    Route::get('panel/class', [ClassController::class, 'class_list']);
+    Route::get('panel/class/create', [ClassController::class, 'create_class']);
+    Route::post('panel/class/create', [ClassController::class, 'insert_class']); 
+    Route::get('panel/class/edit/{id}', [ClassController::class, 'edit_class']);
+    Route::post('panel/class/edit/{id}', [ClassController::class, 'update_class']);
+    Route::get('panel/class/delete/{id}', [ClassController::class, 'delete_class']);
+
+    Route::get('panel/subject', [SubjectController::class, 'subject_list']);
+    Route::get('panel/subject/create', [SubjectController::class, 'create_subject']);
+    Route::post('panel/subject/create', [SubjectController::class, 'insert_subject']); 
+    Route::get('panel/subject/edit/{id}', [SubjectController::class, 'edit_subject']);
+    Route::post('panel/subject/edit/{id}', [SubjectController::class, 'update_subject']);
+    Route::get('panel/subject/delete/{id}', [SubjectController::class, 'delete_subject']);
 
 });

@@ -5,13 +5,13 @@
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="#">Home</a></li>
-    <li class="active">School</li>
+    <li class="active">School Admin</li>
 </ul>
 <!-- END BREADCRUMB -->
 
 <!-- PAGE TITLE -->
 <div class="page-title">
-    <h2><span class="fa fa-arrow-circle-o-left"></span>Edit School</h2>
+    <h2><span class="fa fa-arrow-circle-o-left"></span>Edit School Admin</h2>
 </div>
 <!-- END PAGE TITLE -->
 
@@ -24,20 +24,20 @@
             <div class="col-md-12">
 
                 <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
+                    {{ csrf_field() }}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Edit School</h3>
+                            <h3 class="panel-title">Edit School Admin</h3>
 
                         </div>
                         <div class="panel-body form-group-separated">
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">School Name <span class="required">*</span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Name <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                        <input type="text" name="name" value="{{ old('name', $getSchool->name) }}" class="form-control" />
+                                        <input type="text" name="name" value="{{ old('name', $getRecord->name) }}" class="form-control" />
                                     </div>
                                     <div class="required">{{ $errors->first('name') }}</div>
                                 </div>
@@ -47,10 +47,11 @@
                                 <label class="col-md-3 col-xs-12 control-label">Profile Pic</label>
                                 <div class="col-md-6 col-xs-12">
                                     <input style="padding: 5px;" type="file" name="profile_pic" class="form-control" />
-                                    
-                                        @if(!empty($getSchool->getProfile()))
-                                            <img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ $getSchool->getProfile() }}">
+                                    <td>
+                                        @if(!empty($getRecord->getProfile()))
+                                        <img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ $getRecord->getProfile() }}">
                                         @endif
+                                    </td>
                                 </div>
                             </div>
 
@@ -59,7 +60,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                        <input type="text" name="email" value="{{ old('email', $getSchool->email) }}" class="form-control" />
+                                        <input type="text" name="email" value="{{ old('email', $getRecord->email) }}" class="form-control" />
                                     </div>
                                     <div class="required">{{ $errors->first('email') }}</div>
                                 </div>
@@ -79,7 +80,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="address" value="{{ old('address', $getSchool->address) }}"></textarea>
+                                    <textarea class="form-control" name="address" value="{{ old('address', $getRecord->address) }}"></textarea>
                                 </div>
                             </div>
 
@@ -87,11 +88,13 @@
                                 <label class="col-md-3 col-xs-12 control-label">Status <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <select class="form-control" name="status">
-                                       <option value="1" {{ $getSchool->status == 1 ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ $getSchool->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                        <option value="1" {{ $getRecord->status == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ $getRecord->status == 0 ? 'selected' : '' }}>Inactive</option>
                                     </select>
                                 </div>
                             </div>
+
+                            
 
 
 
@@ -109,6 +112,3 @@
 </div>
 
 @endsection
-
-
-

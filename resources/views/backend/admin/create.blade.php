@@ -37,7 +37,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" />
+                                        <input type="text" required name="name" value="{{ old('name') }}" class="form-control" />
                                     </div>
                                     <div class="required">{{ $errors->first('name') }}</div>
                                 </div>
@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Profile Pic</label>
                                 <div class="col-md-6 col-xs-12">
-                                    <input style="padding: 5px;" type="file" name="profile_pic" class="form-control" />
+                                    <input style="padding: 5px;" type="file" required name="profile_pic" class="form-control" />
                                 </div>
                             </div>
 
@@ -55,7 +55,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                        <input type="text" name="email" value="{{ old('email') }}" class="form-control" />
+                                        <input type="text" required name="email" value="{{ old('email') }}" class="form-control" />
                                     </div>
                                     <div class="required">{{ $errors->first('email') }}</div>
                                 </div>
@@ -66,7 +66,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
-                                        <input type="password" name="password" required class="form-control" />
+                                        <input type="password" required name="password" required class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -74,14 +74,14 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="address" value="{{ old('address') }}"></textarea>
+                                    <textarea class="form-control" required name="address" value="{{ old('address') }}"></textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Status <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <select class="form-control" name="status">
+                                    <select class="form-control" required name="status">
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Role <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <select class="form-control" name="is_admin">
+                                    <select class="form-control" required name="is_admin">
                                         <option value="1">Super Admin</option>
                                         <option value="2">Admin</option>
                                     </select>
