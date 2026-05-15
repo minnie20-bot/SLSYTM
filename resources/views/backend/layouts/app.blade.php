@@ -93,6 +93,15 @@
     <script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/actions.js') }}"></script>
     <!-- END TEMPLATE -->
+    
+    <!-- Maximize sidebar by default -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".page-sidebar .x-navigation").removeClass("x-navigation-minimized");
+            $(".x-navigation-minimize").find(".fa").removeClass("fa-indent").addClass("fa-dedent");
+        });
+    </script>
+    
     @yield('script')
 </body>
 

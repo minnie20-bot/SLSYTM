@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="address" value="{{ old('address', $getSchool->address) }}"></textarea>
+                                    <textarea class="form-control" style="height: 60px;" name="address" value="{{ old('address', $getSchool->address) }}"></textarea>
                                 </div>
                             </div>
 

@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" required name="address" value="{{ old('address') }}"></textarea>
+                                    <textarea class="form-control" required name="address">{{ old('address') }}</textarea>
                                 </div>
                             </div>
 
@@ -114,6 +114,4 @@
 </div>
 
 @endsection
-
-@section('content')
 

@@ -191,7 +191,7 @@ class User extends Authenticatable
             ->paginate(10);
         return $return;
     }
-    
+
     static public function getSchoolAdmin($user_id, $user_type)
     {
         $return = self::select('*');
@@ -237,14 +237,15 @@ class User extends Authenticatable
         return $return;
     }
 
-    
-
     public function getCreatedBy()
     {
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
-
+    public function getClass()
+    {
+        return $this->belongsTo(ClassModels::class, 'class_id');
+    }
 
     public function edit_teacher($id)
     {

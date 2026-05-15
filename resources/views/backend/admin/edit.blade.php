@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="address" value="{{ old('address', $getRecord->address) }}"></textarea>
+                                    <textarea class="form-control" style="height: 60px;" name="address">{{ old('address', $getRecord->address) }}</textarea>
                                 </div>
                             </div>
 
@@ -98,8 +98,8 @@
                                 <label class="col-md-3 col-xs-12 control-label">Role <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <select class="form-control" name="is_admin">
-                                       <option value="1" {{ $getRecord->is_admin == 1 ? 'selected' : '' }}>Super Admin</option>
-                                        <option value="0" {{ $getRecord->is_admin == 2 ? 'selected' : '' }}>Admin</option>
+                                        <option value="1" {{ $getRecord->is_admin == 1 ? 'selected' : '' }}>Super Admin</option>
+                                        <option value="2" {{ $getRecord->is_admin == 2 ? 'selected' : '' }}>Admin</option>
                                     </select>
                                 </div>
                             </div>

@@ -41,4 +41,16 @@ class ClassModels extends Model
             ->Paginate(10);
         return $return;
     }
+
+    static public function getRecordActive($user_id)
+    {
+        $return = self::select('*')
+            ->where('status', '=', 1)
+            ->where('created_by_id', '=', $user_id)
+            ->where('is_delete', '=', 0)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return $return;
+    }
 }

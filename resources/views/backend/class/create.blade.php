@@ -67,6 +67,3 @@
 </div>
 
 @endsection
-
-@section('content')
-

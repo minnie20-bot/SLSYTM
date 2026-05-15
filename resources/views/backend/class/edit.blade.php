@@ -23,8 +23,8 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
+                <form class="form-horizontal" action="{{ url('panel/class/update/'.$getRecord->id) }}" method="post">
+                    @csrf
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Edit Class</h3>

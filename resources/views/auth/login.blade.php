@@ -22,8 +22,8 @@
                 <div>School</div>
                 <div class="login-body">
                     <div class="login-title"><strong>Log In</strong> to your account</div>
-                    <form action="" class="form-horizontal" method="post">
-                        {{ csrf_field() }}
+                    <form action="{{ url('login') }}" class="form-horizontal" method="post">
+                        @csrf
                         @include('message')
                         <div class="form-group">
                         <div class="col-md-12">

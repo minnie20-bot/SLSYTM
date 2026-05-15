@@ -1,13 +1,13 @@
 <div class="page-sidebar">
     <!-- START X-NAVIGATION -->
     <ul class="x-navigation">
-        <li style="background: #e347;">
+        <li style="background: #602828;">
             <a style="font-size: 20px; text-align: center; font-weight: bold;" href="{{ url('panel/dashboard') }}">School</a>
             <a href="#" class="x-navigation-control"></a>
         </li>
         <li class="xn-profile">
             <a href="#" class="profile-mini">
-                <img src="assets/images/users/avatar.jpg" alt="John Doe" />
+                <img src="{{ asset('assets/images/users/avatar.jpg') }}" alt="John Doe" />
             </a>
             <div class="profile">
                 <div class="profile-image">

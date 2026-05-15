@@ -19,8 +19,12 @@ use App\Http\Controllers\Backend\StudentController;
 
 
 
-Route::get('/', [AuthController::class, 'login']);
-Route::post('/', [AuthController::class, 'auth_login']);
+Route::get('/', function () {
+    return redirect('/login');
+});
+
+Route::get('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'auth_login']);
 Route::get('forgot', [AuthController::class, 'forgot']);
 
 Route::post('/logout', function () {
@@ -52,9 +56,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('panel/school', [SchoolController::class, 'school_list']);
     Route::get('panel/school/create', [SchoolController::class, 'create_school']);
     Route::post('panel/school/create', [SchoolController::class, 'insert_school']); 
-    Route::get('panel/school/edit/{id}', [SchoolController::class, 'edit_school']);
-    Route::post('panel/school/edit/{id}', [SchoolController::class, 'update_school']);
-    Route::get('panel/school/delete/{id}', [SchoolController::class, 'delete_school']);
+    // Route::get('panel/school/edit/{id}', [SchoolController::class, 'edit_school']);
+    // Route::post('panel/school/edit/{id}', [SchoolController::class, 'update_school']);
+    // Route::get('panel/school/delete/{id}', [SchoolController::class, 'delete_school']);
 
 });
 
@@ -71,9 +75,10 @@ Route::group(['middleware' => 'school'], function () {
     Route::get('panel/student', [StudentController::class, 'student_list']);
     Route::get('panel/student/create', [StudentController::class, 'create_student']);
     Route::post('panel/student/create', [StudentController::class, 'insert_student']);
-    // Route::get('panel/student/edit/{id}', [StudentController::class, 'edit_student']);
-    // Route::post('panel/student/edit/{id}', [StudentController::class, 'update_student']);
-    // Route::get('panel/student/delete/{id}', [StudentController::class, 'delete_student']);
+    Route::get('panel/student/edit/{id}', [StudentController::class, 'edit_student']);
+    Route::post('panel/student/edit/{id}', [StudentController::class, 'update_student']);
+    Route::get('panel/student/delete/{id}', [StudentController::class, 'delete_student']);
+
 
 
     Route::get('panel/school_admin', [SchoolAdminController::class, 'school_admin_list']);

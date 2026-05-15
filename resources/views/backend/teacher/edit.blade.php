@@ -124,35 +124,35 @@
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Current Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="address">{{ old('address', $getRecord->address) }}</textarea>
+                                    <textarea class="form-control" style="height: 60px;" required name="address">{{ old('address', $getRecord->address) }}</textarea>
                                 </div>
                             </div>
 
                              <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Permanent Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" required name="permanent_address">{{ old('permanent_address', $getRecord->permanent_address) }}</textarea>
+                                    <textarea class="form-control" style="height: 60px;" required name="permanent_address">{{ old('permanent_address', $getRecord->permanent_address) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Qualification <span class="required"></span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="qualification">{{ old('qualification', $getRecord->qualification) }}</textarea>
+                                    <textarea class="form-control" style="height: 60px;" name="qualification">{{ old('qualification', $getRecord->qualification) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Work Experience <span class="required"></span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="work_experience">{{ old('work_experience', $getRecord->work_experience) }}</textarea>
+                                    <textarea class="form-control" style="height: 60px;" name="work_experience">{{ old('work_experience', $getRecord->work_experience) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Note <span class="required"></span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" name="note">{{ old('note', $getRecord->note) }}</textarea>
+                                    <textarea class="form-control" style="height: 60px;" name="note">{{ old('note', $getRecord->note) }}</textarea>
                                 </div>
                             </div>
 

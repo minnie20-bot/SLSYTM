@@ -58,7 +58,7 @@
                             </select>
                         </div>
 
-
+                        
                         <div class="col-md-2">
                             <label>Status</label>
                             <select class="form-control" name="status">
@@ -115,11 +115,11 @@
                                 <tr>
                                     <td>{{ $value->id }}</td>
                                     @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)
-                                    <td>
-                                        @if(!empty($value->getCreatedBy))
-                                        {{ $value->getCreatedBy->name }}
-                                        @endif
-                                    </td>
+                                        <td>
+                                            @if(!empty($value->getCreatedBy))
+                                                {{ $value->getCreatedBy->name }}
+                                            @endif
+                                        </td>
                                     @endif
                                     <td>
                                         @if(!empty($value->getProfile()))
@@ -132,10 +132,10 @@
                                     <td>{{ $value->gender }}</td>
                                     <td>
                                         {{ date('d-m-Y', strtotime($value->date_of_birth)) }}
-                                    </td>
+                                    </td> 
                                     <td>
                                         {{ date('d-m-Y', strtotime($value->date_of_joining)) }}
-                                    </td>
+                                    </td>  
                                     <td>{{ $value->mobile_number }}</td>
                                     <td>{{ $value->marital_status }}</td>
                                     <td>{{ $value->address }}</td>
@@ -157,13 +157,13 @@
                                     </td>
                                 </tr>
                                 @empty
-                                <tr>
-                                    <td colspan="100%">Record not found.</td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="100%">Record not found.</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
-
+                
                     </div>
                 </div>
             </div>

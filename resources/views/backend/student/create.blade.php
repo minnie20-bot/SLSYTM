@@ -95,6 +95,9 @@
                                 <div class="col-md-6 col-xs-12">
                                     <select class="form-control" required name="class_id">
                                         <option value="">Select</option>
+                                        @foreach($getClass as $class)
+                                            <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -143,7 +146,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Admission Date <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
@@ -168,7 +171,7 @@
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                         <input type="text" required name="blood_type" value="{{ old('blood_type') }}" class="form-control" />
                                     </div>
-                                    <div class="required">{{ $errors->first('blood_type') }}</div>
+                                    <div class="required">{{ $errors->first('mobile_number') }}</div>
                                 </div>
                             </div>
 
@@ -179,7 +182,7 @@
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                         <input type="text" required name="height" value="{{ old('height') }}" class="form-control" />
                                     </div>
-                                    <div class="required">{{ $errors->first('height') }}</div>
+                                    <div class="required">{{ $errors->first('mobile_number') }}</div>
                                 </div>
                             </div>
 
@@ -190,7 +193,7 @@
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                         <input type="text" required name="weight" value="{{ old('weight') }}" class="form-control" />
                                     </div>
-                                    <div class="required">{{ $errors->first('height') }}</div>
+                                    <div class="required">{{ $errors->first('mobile_number') }}</div>
                                 </div>
                             </div>
 

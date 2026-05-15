@@ -46,7 +46,7 @@
 
                         <div class="col-md-2">
                             <label>Address</label>
-                            <input type="text" class="form-control" value="{{ Request::get('address') }}" placeholder="Address" name="address">
+                                <input type="text" name="address" class="form-control" value="{{ Request::get('address') }}">                      
                         </div>
 
                         <div class="col-md-2">
