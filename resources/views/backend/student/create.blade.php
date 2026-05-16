@@ -23,8 +23,8 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form class="form-horizontal" action="{{ url('panel/student/create') }}" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
+                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Create Student</h3>
@@ -32,18 +32,22 @@
                         </div>
                         <div class="panel-body">
 
-                        @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)
-                         <div class="form-group">
+                            @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)
+
+                            <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">School Name <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <select class="form-control" required name="school_id">
+                                    <select class="form-control SchoolChange" required name="school_id">
+
                                         <option value="">Select</option>
                                         @foreach($getSchool as $school)
-                                            <option value="{{ $school->id }}">{{ $school->name }}</option>
+                                        <option value="{{ $school->id }}">{{ $school->name }}</option>
                                         @endforeach
+
                                     </select>
                                 </div>
                             </div>
+
                             @endif
 
                             <div class="form-group">
@@ -93,10 +97,10 @@
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Class <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <select class="form-control" required name="class_id">
+                                    <select class="form-control getClass" required name="class_id">
                                         <option value="">Select</option>
                                         @foreach($getClass as $class)
-                                            <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                        <option value="{{ $class->id }}">{{ $class->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -146,7 +150,7 @@
                                 </div>
                             </div>
 
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Admission Date <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
@@ -171,7 +175,7 @@
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                         <input type="text" required name="blood_type" value="{{ old('blood_type') }}" class="form-control" />
                                     </div>
-                                    <div class="required">{{ $errors->first('mobile_number') }}</div>
+                                    <div class="required">{{ $errors->first('blood_type') }}</div>
                                 </div>
                             </div>
 
@@ -182,7 +186,7 @@
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                         <input type="text" required name="height" value="{{ old('height') }}" class="form-control" />
                                     </div>
-                                    <div class="required">{{ $errors->first('mobile_number') }}</div>
+                                    <div class="required">{{ $errors->first('height') }}</div>
                                 </div>
                             </div>
 
@@ -193,18 +197,18 @@
                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                         <input type="text" required name="weight" value="{{ old('weight') }}" class="form-control" />
                                     </div>
-                                    <div class="required">{{ $errors->first('mobile_number') }}</div>
+                                    <div class="required">{{ $errors->first('weight') }}</div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Current Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
-                                    <textarea class="form-control" required name="address" value="{{ old('address') }}"></textarea>
+                                    <textarea class="form-control" required name="address">{{ old('address') }}</textarea>
                                 </div>
                             </div>
 
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label class="col-md-5 col-xs-12 control-label">Permanent Address <span class="required">*</span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <textarea class="form-control" required name="permanent_address" value="{{ old('permanent_address') }}"></textarea>
@@ -244,7 +248,7 @@
                                 </div>
                             </div>
 
-                        <hr>
+                            <hr>
 
 
 
@@ -263,5 +267,24 @@
 
 @endsection
 
-@section('content')
+@section('script')
 
+<script type="text/javascript">
+    $('body').on('change', '.SchoolChange', function() {
+        var school_id = $(this).val();
+        $.ajax({
+            url: "{{ url('panel/student/getClass') }}",
+            type: "post",
+            data: {
+                _token: "{{ csrf_token() }}",
+                school_id: school_id
+            },
+            dataType: "json",
+            success: function(response) {
+                $('.getClass').html(response.success);
+            },
+        });
+    });
+</script>
+
+@endsection

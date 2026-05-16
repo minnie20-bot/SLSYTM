@@ -96,14 +96,16 @@
                                     <th>School Name</th>
                                     @endif
                                     <th>Profile</th>
+                                    <th>Admission Number</th>
+                                    <th>Roll Number</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Email</th>
                                     <th>Gender</th>
                                     <th>Date of Birth</th>
-                                    <th>Date of Joining</th>
+                                    <th>Admission Date </th>
                                     <th>Mobile Number</th>
-                                    <th>Marital Status</th>
+                                    <th>Class</th>
                                     <th>Address</th>
                                     <th>Status</th>
                                     <th>Created Date</th>
@@ -126,7 +128,9 @@
                                         <img style="width: 50px;height: 50px;border-radius: 50%;" src="{{ $value->getProfile() }}">
                                         @endif
                                     </td>
-                                    <td>{{ $value->name }}</td>
+                                    <td>{{ $value->admission_number }}</td>
+                                    <td>{{ $value->roll_number }}</td>
+                                    <td>{{ $value->name }}</td> 
                                     <td>{{ $value->last_name }}</td>
                                     <td>{{ $value->email }}</td>
                                     <td>{{ $value->gender }}</td>
@@ -134,10 +138,10 @@
                                         {{ date('d-m-Y', strtotime($value->date_of_birth)) }}
                                     </td> 
                                     <td>
-                                        {{ date('d-m-Y', strtotime($value->date_of_joining)) }}
+                                        {{ date('d-m-Y', strtotime($value->admission_date)) }}
                                     </td>  
                                     <td>{{ $value->mobile_number }}</td>
-                                    <td>{{ $value->marital_status }}</td>
+                                    <td>{{ optional($value->getClass)->name }}</td>
                                     <td>{{ $value->address }}</td>
                                     <td>
 

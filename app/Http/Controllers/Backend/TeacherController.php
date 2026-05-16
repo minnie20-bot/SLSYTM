@@ -87,8 +87,12 @@ class TeacherController extends Controller
 
     public function update_teacher($id, Request $request)
     {
-        request()->validate([
-            'email' => 'required|email|unique:users,email'.$id,
+        $request->validate([
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($id, 'id'),
+            ],
         ]);
 
 

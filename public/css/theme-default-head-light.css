@@ -91,7 +91,7 @@ body {
   /* END RTL CONTENT MODE */
 }
 .page-container .page-sidebar {
-  width: 220px;
+  width: 180px;
   float: left;
   position: relative;
   z-index: 3;
@@ -104,7 +104,7 @@ body {
 }
 .page-container .page-content {
   min-height: 100%;
-  margin-left: 220px;
+  margin-left: 180px;
   background: #f5f5f5 url('../img/bg.png') left top repeat;
   position: relative;
   zoom: 1;
@@ -221,7 +221,7 @@ body {
 }
 .page-container.page-mode-rtl .page-content {
   margin-left: 0px;
-  margin-right: 220px;
+  margin-right: 180px;
 }
 .page-container.page-mode-rtl.page-container-wide .page-content {
   margin-right: 50px;
@@ -231,7 +231,7 @@ body {
 }
 .page-container.page-navigation-top-fixed .x-navigation.x-navigation-horizontal {
   position: fixed;
-  padding-right: 220px;
+  padding-right: 180px;
   top: 0px;
 }
 .page-container.page-navigation-top-fixed .page-content {

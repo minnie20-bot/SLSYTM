@@ -56,9 +56,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('panel/school', [SchoolController::class, 'school_list']);
     Route::get('panel/school/create', [SchoolController::class, 'create_school']);
     Route::post('panel/school/create', [SchoolController::class, 'insert_school']); 
-    // Route::get('panel/school/edit/{id}', [SchoolController::class, 'edit_school']);
-    // Route::post('panel/school/edit/{id}', [SchoolController::class, 'update_school']);
-    // Route::get('panel/school/delete/{id}', [SchoolController::class, 'delete_school']);
+    Route::get('panel/school/edit/{id}', [SchoolController::class, 'edit_school']);
+    Route::post('panel/school/edit/{id}', [SchoolController::class, 'update_school']);
+    Route::get('panel/school/delete/{id}', [SchoolController::class, 'delete_school']);
 
 });
 
@@ -78,6 +78,7 @@ Route::group(['middleware' => 'school'], function () {
     Route::get('panel/student/edit/{id}', [StudentController::class, 'edit_student']);
     Route::post('panel/student/edit/{id}', [StudentController::class, 'update_student']);
     Route::get('panel/student/delete/{id}', [StudentController::class, 'delete_student']);
+    Route::post('panel/student/getClass', [StudentController::class, 'getClass']);
 
 
 
