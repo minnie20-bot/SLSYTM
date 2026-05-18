@@ -52,14 +52,26 @@ class User extends Authenticatable
     }
 
     public function getProfile()
-    {
-        if (!empty($this->profile_pic) && file_exists(public_path('upload/profile/' . $this->profile_pic))) {
-            return url('upload/profile/' . $this->profile_pic);
-        }
+{
+    if (!empty($this->profile_pic) &&
+        file_exists(public_path('upload/profile/' . $this->profile_pic))) {
 
-        return '';
+        return asset('upload/profile/' . $this->profile_pic);
     }
 
+    return '';
+}
+
+public function getProfileLive()
+{
+    if (!empty($this->profile_pic) &&
+        file_exists(public_path('upload/profile/' . $this->profile_pic))) {
+
+        return asset('upload/profile/' . $this->profile_pic);
+    }
+
+    return asset('upload/profile/prof.jpg');
+}
 
 
     static public function getSingle($id)
@@ -290,10 +302,12 @@ class User extends Authenticatable
 
     public function edit_teacher($id)
     {
-        if (!empty($this->profile_pic) && file('upload/profile/' . $this->profile_pic)) {
-            return url('upload/profile/' . $this->profile_pic);
-        } else {
-            return "";
+        $user = self::find($id);
+
+        if (!empty($user->profile_pic) && file_exists(public_path('public/upload/profile/' . $user->profile_pic))) {
+            return url('public/upload/profile/' . $user->profile_pic);
         }
+
+        return "";
     }
 }

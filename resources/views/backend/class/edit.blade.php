@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form class="form-horizontal" action="{{ url('panel/class/update/'.$getRecord->id) }}" method="post">
+                <form class="form-horizontal" action="" method="post">
                     @csrf
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -56,7 +56,7 @@
 
                         </div>
                         <div class="panel-footer">
-                            <button class="btn btn-primary pull-right">Submit</button>
+                            <button type="submit" class="btn btn-primary pull-right">Submit</button>
                         </div>
                     </div>
                 </form>

@@ -21,7 +21,7 @@
 
     <!-- CSS INCLUDE -->
     <link rel="stylesheet" href="{{ asset('css/theme-default.css') }}">
-    <!-- EOF CSS INCLUDE -->
+    <!-- END OF CSS INCLUDE -->
 </head>
 
 <body>

@@ -1095,9 +1095,12 @@ body.page-container-boxed .page-container {
   font-weight: 400;
   color: #999;
 }
+
+
+
 .profile .profile-controls a {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   font-size: 14px;
   color: #DDD;
   border: 2px solid #DDD;

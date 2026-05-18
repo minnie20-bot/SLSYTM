@@ -6,16 +6,13 @@
             <a href="#" class="x-navigation-control"></a>
         </li>
         <li class="xn-profile">
-            <a href="#" class="profile-mini">
-                <img src="{{ asset('assets/images/users/avatar.jpg') }}" alt="John Doe" />
-            </a>
+           
             <div class="profile">
                 <div class="profile-image">
-                    <img src="{{ asset('assets/images/users/avatar.jpg') }}" alt="John Doe" />
+                    <img src="{{ Auth::user()->getProfileLive() }}" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover;" alt="{{ Auth::user()->name }}"/>
                 </div>
                 <div class="profile-data">
-                    <div class="profile-data-name">John Doe</div>
-                    <div class="profile-data-title">Web Developer/Designer</div>
+                    <div class="profile-data-name">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</div>
                 </div>
                 <div class="profile-controls">
                     <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
@@ -24,9 +21,20 @@
             </div>
         </li>
 
+         @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2 || Auth::user()->is_admin == 3)
         <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
             <a href="{{ url('panel/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
         </li>
+        @elseif(Auth::user()->is_admin == 5)
+         <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
+            <a href="{{ url('teacher/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+        </li>
+        @elseif(Auth::user()->is_admin == 6)
+         <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
+            <a href="{{ url('student/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+        </li>
+
+        @endif
 
         @if(Auth::user()->is_admin == 1 || Auth::user()->is_admin == 2)
 
@@ -58,23 +66,26 @@
 
         @if(Auth::user()->is_admin == 3)
 
-        <li class="xn-openable {{ (Request::segment(2) == 'class' || Request::segment(2) == 'subject') ? 'active' : '' }}">
+        <li class="xn-openable {{ (Request::segment(2) == 'class' || Request::segment(2) == 'subject' || Request::segment(2) == 'assign-subject') ? 'active' : '' }}">
             <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Academics</span></a>
             <ul>
                 <li class="{{ (Request::segment(2) == 'class') ? 'active' : '' }}"><a href="{{ url('panel/class') }}"><span class="fa fa-random"></span> Class</a></li>
 
                 <li class="{{ (Request::segment(2) == 'subject') ? 'active' : '' }}"><a href="{{ url('panel/subject') }}"><span class="fa fa-random"></span> Subject</a></li>
 
+                <li class="{{ (Request::segment(2) == 'assign-subject') ? 'active' : '' }}"><a href="{{ url('panel/assign-subject') }}"><span class="fa fa-random"></span> Assign Subject</a></li>
+
             </ul>
         </li>
 
         @endif
 
-        <li class="xn-openable">
-            <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
-            <ul>
-                <li><a href="{{ url('panel/layout-boxed') }}">List</a></li>
-            </ul>
+        <li class="{{ (Request::segment(2) == 'my-account') ? 'active' : '' }}">
+            <a href="{{ url('panel/my-account') }}"><span class="fa fa-user"></span> <span class="xn-text">My Account</span></a>
+        </li>
+
+         <li class="{{ (Request::segment(2) == 'change-password') ? 'active' : '' }}">
+            <a href="{{ url('panel/change-password') }}"><span class="fa fa-key"></span> <span class="xn-text">Change Password</span></a>
         </li>
 
     </ul>

@@ -6,6 +6,9 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\AuthCommonMiddleware;
 use App\Http\Middleware\SchoolMiddleware;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\StudentMiddleware;
+use App\Http\Middleware\TeacherMiddleware;
+
 
 
 
@@ -20,6 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'common' => AuthCommonMiddleware::class,
             'admin' => AdminMiddleware::class,
             'school' => SchoolMiddleware::class,
+            'student' => StudentMiddleware::class,
+            'teacher' => TeacherMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

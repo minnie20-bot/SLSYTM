@@ -11,6 +11,8 @@ use App\Http\Controllers\Backend\SchoolAdminController;
 use App\Http\Controllers\Backend\ClassController;
 use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\StudentController;
+use App\Http\Controllers\Backend\UserController;
+
 
 
 
@@ -37,7 +39,13 @@ Route::post('/logout', function () {
 
 Route::group(['middleware' => 'common'], function () {
 
-    Route::get('panel/dashboard', [DashboardController::class, 'dashboard']);
+Route::get('panel/change-password', [UserController::class, 'change_password']);
+Route::post('panel/change-password', [UserController::class, 'update _password']);
+
+
+Route::get('panel/my-account', [UserController::class, 'my_account']);
+Route::post('panel/my-account', [UserController::class, 'update_account']);
+
 
 });
 
@@ -64,6 +72,8 @@ Route::group(['middleware' => 'admin'], function () {
 
 
 Route::group(['middleware' => 'school'], function () {
+
+    Route::get('panel/dashboard', [DashboardController::class, 'dashboard']);
 
     Route::get('panel/teacher', [TeacherController::class, 'teacher_list']);
     Route::get('panel/teacher/create', [TeacherController::class, 'create_teacher']);
@@ -102,5 +112,24 @@ Route::group(['middleware' => 'school'], function () {
     Route::get('panel/subject/edit/{id}', [SubjectController::class, 'edit_subject']);
     Route::post('panel/subject/edit/{id}', [SubjectController::class, 'update_subject']);
     Route::get('panel/subject/delete/{id}', [SubjectController::class, 'delete_subject']);
+
+    Route::get('panel/assign-subject', [SubjectController::class, 'assign_subject_list']);
+    Route::get('panel/assign-subject/create', [SubjectController::class, 'create_assign_subject']);
+    Route::post('panel/assign-subject/create', [SubjectController::class, 'insert_assign_subject']); 
+    Route::get('panel/assign-subject/edit/{id}', [SubjectController::class, 'edit_assign_subject']);
+    Route::post('panel/assign-subject/edit/{id}', [SubjectController::class, 'update_assign_subject']);
+    Route::get('panel/assign-subject/delete/{id}', [SubjectController::class, 'delete_assign_subject']);
+
+});
+
+Route::group(['middleware' => 'teacher'], function ()  {
+
+    Route::get('teacher/dashboard', [DashboardController::class, 'dashboard']);
+
+});
+
+Route::group(['middleware' => 'student'], function ()  {
+
+    Route::get('student/dashboard', [DashboardController::class, 'dashboard']);
 
 });

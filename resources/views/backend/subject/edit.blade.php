@@ -49,8 +49,8 @@
                                 <div class="col-md-6 col-xs-12">
                                     <select class="form-control" required name="type">
                                         <option value="">Select</option>
-                                        <option {{ ($getRecord->type == 'Theory') ? 'selected' : '' }} value="Theory">Theory</option>
-                                        <option {{ ($getRecord->type == 'Practical') ? 'selected' : '' }} value="Practical">Practical</option>
+                                        <option {{ ($getRecord->type == 'Major') ? 'selected' : '' }} value="Major">Major</option>
+                                        <option {{ ($getRecord->type == 'Minor') ? 'selected' : '' }} value="Minor">Minor</option>
                                     </select>
                                 </div>
                             </div>

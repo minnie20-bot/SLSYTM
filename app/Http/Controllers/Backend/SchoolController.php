@@ -76,7 +76,6 @@ class SchoolController extends Controller
             ],
         ]);
 
-
         $user = User::getSingle($id);
         $user->name = trim($request->name);
         $user->email = trim($request->email);
