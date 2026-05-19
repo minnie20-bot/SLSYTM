@@ -2,7 +2,7 @@
     <!-- START X-NAVIGATION -->
     <ul class="x-navigation">
         <li style="background: #602828;">
-            <a style="font-size: 20px; text-align: center; font-weight: bold;" href="{{ url('panel/dashboard') }}">School</a>
+            <a style="font-size: 20px; text-align: center; font-weight: bold;" href="{{ url('panel/dashboard') }}">CampusOne</a>
             <a href="#" class="x-navigation-control"></a>
         </li>
         <li class="xn-profile">
@@ -66,7 +66,7 @@
 
         @if(Auth::user()->is_admin == 3)
 
-        <li class="xn-openable {{ (Request::segment(2) == 'class' || Request::segment(2) == 'subject' || Request::segment(2) == 'assign-subject') ? 'active' : '' }}">
+        <li class="xn-openable {{ (Request::segment(2) == 'class' || Request::segment(2) == 'subject' || Request::segment(2) == 'class-timetable' || Request::segment(2) == 'assign-subject' || Request::segment(2) == 'assign-teacher') ? 'active' : '' }}">
             <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Academics</span></a>
             <ul>
                 <li class="{{ (Request::segment(2) == 'class') ? 'active' : '' }}"><a href="{{ url('panel/class') }}"><span class="fa fa-random"></span> Class</a></li>
@@ -74,6 +74,10 @@
                 <li class="{{ (Request::segment(2) == 'subject') ? 'active' : '' }}"><a href="{{ url('panel/subject') }}"><span class="fa fa-random"></span> Subject</a></li>
 
                 <li class="{{ (Request::segment(2) == 'assign-subject') ? 'active' : '' }}"><a href="{{ url('panel/assign-subject') }}"><span class="fa fa-random"></span> Assign Subject</a></li>
+
+                <li class="{{ (Request::segment(2) == 'class-timetable') ? 'active' : '' }}"><a href="{{ url('panel/class-timetable') }}"><span class="fa fa-random"></span> Class Timetable</a></li>
+
+                <li class="{{ (Request::segment(2) == 'assign-teacher') ? 'active' : '' }}"><a href="{{ url('panel/assign-teacher') }}"><span class="fa fa-random"></span> Assign Teacher</a></li>
 
             </ul>
         </li>

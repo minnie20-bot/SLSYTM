@@ -204,6 +204,18 @@ public function getProfileLive()
         return $return;
     }
 
+    static public function getTeacherActive($user_id)
+{
+    return self::where('created_by_id', $user_id)
+        ->where('is_admin', 5)
+        ->where('is_delete', 0)
+        ->where('status', 1)
+        ->orderBy('id', 'desc')
+        ->get();
+}
+
+
+
     static public function getStudent($user_id, $user_type)
     {
         $return = self::select('*');

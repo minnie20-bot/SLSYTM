@@ -25,9 +25,11 @@ class SubjectClassModel extends Model
 
     static function getSelectedSubject($class_id, $created_by_id)
     {
-        return SubjectClassModel::where('created_by_id', $created_by_id)
-            ->where('class_id', $class_id)
-            ->where('is_delete', 0)
+        return SubjectClassModel::select('subject_class.*', 'subject.name as subject_name')
+            ->join('subject', 'subject.id', '=', 'subject_class.subject_id')
+            ->where('subject_class.created_by_id', $created_by_id)
+            ->where('subject_class.class_id', $class_id)
+            ->where('subject_class.is_delete', 0)
             ->get();
     }
 

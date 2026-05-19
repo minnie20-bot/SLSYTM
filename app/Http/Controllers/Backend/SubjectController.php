@@ -7,6 +7,8 @@ use App\Models\ClassModels;
 use Illuminate\Http\Request;
 use App\Models\SubjectModels;
 use App\Models\SubjectClassModel;
+use App\Models\WeekModel;
+use App\Models\ClassTimeTableModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -160,6 +162,106 @@ class SubjectController extends Controller
         return redirect('panel/assign-subject')->with('Success', "Assign Subject Class Successfully Deleted");
     }
 
+    public function class_timetable(Request $request)
+    {
+        if(!empty($request->class_id))
+            {
+                $getSubject = SubjectClassModel::getSelectedSubject($request->class_id, Auth::user()->id); 
+            }
+            else
+            {
+                $getSubject = '';
+            }
+        $data['getSubject'] = $getSubject;
+
+        $result = array();
+        $getWeek = WeekModel::getRecord();
+        foreach($getWeek as $week)
+        {
+            $arraydata = array();
+            $arraydata['id'] = $week->id;
+            $arraydata['week_name'] = $week->name;
+
+            if(!empty($request->class_id) && !empty($request->subject_id))
+            {
+                $getClassTimeTable = ClassTimeTableModel::getRecord($request->class_id, $request->subject_id, $week->id);
+                if(!empty($getClassTimeTable))
+                {
+                    $arraydata['start_time']    = $getClassTimeTable->start_time;
+                    $arraydata['end_time']      = $getClassTimeTable->end_time;
+                    $arraydata['room_number']   = $getClassTimeTable->room_number;
+                }
+                else
+                {
+                    $arraydata['start_time']    = '';
+                    $arraydata['end_time']      = '';
+                    $arraydata['room_number']   = '';
+                }
+            }
+            else
+            {
+                $arraydata['start_time']    = '';
+                $arraydata['end_time']      = '';
+                $arraydata['room_number']   = '';
+            }
+            
+
+            $result[] = $arraydata;
+        }
+
+        $data['getRecord'] = $result;
+
+        $data['getClass'] = ClassModels::getRecordActive(Auth::User()->id);
+        $data['meta_title'] = "Class Timetable";
+
+        return view('backend.class_timetable.list', $data);
+    }
+
+    public function submit_class_timetable(Request $request)
+    {
+        if(!empty($request->class_id) && !empty($request->subject_id))
+        {
+            ClassTimeTableModel::DeleteRecord($request->class_id, $request->subject_id);
+
+            foreach($request->timetable as $week_id => $timetable) 
+            {    
+               if(!empty($timetable['start_time']) && !empty($timetable['end_time']) && !empty($timetable['room_number']))    
+                {
+                    $save = new ClassTimeTableModel();
+                    $save->week_id = $week_id;
+                    $save->start_time = $timetable['start_time'];
+                    $save->end_time = $timetable['end_time'];
+                    $save->room_number = $timetable['room_number'];
+                    $save->class_id = $request->class_id;
+                    $save->subject_id = $request->subject_id;
+                    $save->save();
+                }
+            }
+            return redirect()->back()->with('success', "Class Timetable Updated Successfully.");
+
+        }
+        else
+        {
+             return redirect()->back()->with('error', "Please Select Class and Subject.");
+        }
+        dd($request->all());
+    }
+
+    public function get_assigned_subject_class(Request $request)
+    {
+        $getSubject = SubjectClassModel::getSelectedSubject($request->class_id, Auth::user()->id);
+
+        $html = '';
+        $html .= '<option value="">Select</option>';
+
+        foreach ($getSubject as $subject) 
+            {
+            $html .= '<option value="' . $subject->subject_id . '">' . $subject->subject_name . '</option>';
+        }
+
+        $json['success'] = $html;
+        echo json_encode($json);
+    }
 
 
 

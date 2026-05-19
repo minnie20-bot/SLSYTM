@@ -120,6 +120,20 @@ Route::group(['middleware' => 'school'], function () {
     Route::post('panel/assign-subject/edit/{id}', [SubjectController::class, 'update_assign_subject']);
     Route::get('panel/assign-subject/delete/{id}', [SubjectController::class, 'delete_assign_subject']);
 
+    Route::get('panel/class-timetable', [SubjectController::class, 'class_timetable']);
+    Route::post('panel/class-timetable', [SubjectController::class, 'submit_class_timetable']);
+    Route::post('panel/get_assigned_subject_class', [SubjectController::class, 'get_assigned_subject_class']); 
+    
+
+    Route::get('panel/assign-teacher', [ClassController::class, 'assign_teacher_list']);
+    Route::get('panel/assign-teacher/create', [ClassController::class, 'create_assign_teacher']);
+    Route::post('panel/assign-teacher/create', [ClassController::class, 'insert_assign_teacher']); 
+    Route::get('panel/assign-teacher/edit/{id}', [ClassController::class, 'edit_assign_teacher']);
+    Route::post('panel/assign-teacher/edit/{id}', [ClassController::class, 'update_assign_teacher']);
+    Route::get('panel/assign-teacher/delete/{id}', [ClassController::class, 'delete_assign_teacher']);
+
+
+   
 });
 
 Route::group(['middleware' => 'teacher'], function ()  {

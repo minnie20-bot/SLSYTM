@@ -22,20 +22,20 @@ class StudentController extends Controller
     }
 
     public function getClass(Request $request)
-{
-    $getClass = ClassModels::getRecordActive($request->school_id);
-    
-    $html = '';
-    $html .= '<option value="">Select</option>';
+    {
+        $getClass = ClassModels::getRecordActive($request->school_id);
 
-    foreach ($getClass as $class) {
-        $html .= '<option value="'.$class->id.'">'.$class->name.'</option>';
+        $html = '';
+        $html .= '<option value="">Select</option>';
+
+        foreach ($getClass as $class) {
+            $html .= '<option value="' . $class->id . '">' . $class->name . '</option>';
+        }
+
+        $json['success'] = $html;
+        echo json_encode($json);
     }
 
-    $json['success'] = $html;
-    echo json_encode($json);
-}
-    
     public function create_student()
     {
         $data['getClass'] = ClassModels::getRecordActive(Auth::user()->id);
@@ -103,7 +103,7 @@ class StudentController extends Controller
         $data['meta_title'] = "Edit student";
         return view('backend.student.edit', $data);
     }
-    
+
     function update_student(Request $request, $id)
     {
         $request->validate([
@@ -152,10 +152,9 @@ class StudentController extends Controller
 
 
         return redirect('panel/student')->with('success', "Student Successfully updated");
+    }
 
-}
-
-function delete_student($id)
+    function delete_student($id)
     {
         $user = User::getSingle($id);
         $user->is_delete = 1;
@@ -163,5 +162,4 @@ function delete_student($id)
 
         return redirect('panel/student')->with('success', "Student Successfully deleted");
     }
-
 }
