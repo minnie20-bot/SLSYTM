@@ -23,11 +23,11 @@
         <div class="row">
             <div class="col-md-12">
 
-                <form class="form-horizontal" action="{{ url('panel/assign-teacher/create') }}" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ url('panel/assign-teacher/edit/'.$getRecord->id) }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Create Assign Teacher</h3>
+                            <h3 class="panel-title">Edit Assign Teacher</h3>
 
                         </div>
                         <div class="panel-body form-group-separated">
@@ -66,6 +66,18 @@
 
                                     <label style="display: block; margin-bottom: 7px;"><input {{ $checked }} type="checkbox" value="{{ $teacher->id }}" name="teacher_id[]"> {{ $teacher->name }} {{ $teacher->last_name }}</label>
                                     @endforeach
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label">Subject <span class="required">*</span></label>
+                                <div class="col-md-6 col-xs-12">
+                                    <select class="form-control" required name="subject_id">
+                                        <option value="">Select Subject</option>
+                                        @foreach($getSubject as $subject)
+                                        <option value="{{ $subject->id }}"
+                                            {{ $getRecord->subject_class_id == $subject->id ? 'selected' : '' }}>{{ $subject->subject_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

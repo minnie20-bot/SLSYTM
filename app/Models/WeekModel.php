@@ -15,7 +15,7 @@ class WeekModel extends Model
 
     static public function getRecord()
     {
-        return self::get();
+        return self::all();
     }
 
 }

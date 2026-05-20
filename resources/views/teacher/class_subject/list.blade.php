@@ -5,13 +5,13 @@
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="#">Home</a></li>
-    <li class="active">Assign Teacher</li>
+    <li class="active">My Class & Subjects</li>
 </ul>
 <!-- END BREADCRUMB -->
 
 <!-- PAGE TITLE -->
 <div class="page-title">
-    <h2><span class="fa fa-arrow-circle-o-left"></span> Assign Teacher</h2>
+    <h2><span class="fa fa-arrow-circle-o-left"></span> My Class & Subjects</h2>
 </div>
 <!-- END PAGE TITLE -->
 
@@ -25,39 +25,26 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Assign Teacher Search</h3>
+                    <h3 class="panel-title">My Class & Subjects Search</h3>
                 </div>
                 <div class="panel-body">
                     <form action="" method="get">
-                        <div class="col-md-2">
-                            <label>ID</label>
-                            <input type="text" class="form-control" value="{{ Request::get('id') }}" placeholder="ID" name="id">
-                        </div>
-
-                        <div class="col-md-2">
+                       
+                    <div class="col-md-2">
                             <label>Class Name</label>
                             <input type="text" class="form-control" value="{{ Request::get('class_name') }}" placeholder="Class Name" name="class_name">
                         </div>
 
                         <div class="col-md-2">
-                            <label>Teacher Name</label>
-                            <input type="text" class="form-control" value="{{ Request::get('teacher_name') }}" placeholder="Teacher Name" name="teacher_name">
-                        </div>
-
-                        <div class="col-md-2">
-                            <label>Status</label>
-                            <select class="form-control" name="status">
-                                <option value="">Select</option>
-                                <option {{ Request::get('status') == '1' ? 'selected' : '' }} value="1">Active</option>
-                                <option {{ Request::get('status') == '100' ? 'selected' : '' }} value="100">Inactive</option>
-                            </select>
+                            <label>Subject Name</label>
+                            <input type="text" class="form-control" value="{{ Request::get('subject_name') }}" placeholder="Subject Name" name="subject_name">
                         </div>
 
                         <div style="clear: both;"></div>
                         <br>
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary">Search</button>
-                            <a href="{{ url('panel/assign-subject') }}" class="btn btn-success">Reset</a>
+                            <a href="{{ url('teacher/my-class-subjects') }}" class="btn btn-success">Reset</a>
                         </div>
                     </form>
                 </div>
@@ -66,8 +53,8 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading">
-                    <h3 class="panel-title">Assign Teacher List</h3>
-                    <a class="btn btn-primary pull-right" href="{{ url('panel/assign-teacher/create') }}">Create Assign Teacher</a>
+                    <h3 class="panel-title">My Class & Subjects List</h3>
+                    <a class="btn btn-primary pull-right" href="{{ url('panel/school/create') }}">Create School</a>
                 </div>
 
                 <div class="panel-body panel-body-table">
@@ -78,33 +65,31 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Class Name</th>
-                                    <th>Teacher Name</th>
-                                    <th>Status</th>
+                                    <th>Subject Name</th>
+                                    <th>Subject Type</th>
+                                    <th>My Class Timetable</th>
                                     <th>Created Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                           <tbody>
                                 @forelse($getRecord as $value)
                                 <tr>
                                     <td>{{ $value->id }}</td>
                                     <td>{{ $value->class_name }}</td>
-                                    <td>{{ $value->teacher_name }} {{ $value->teacher_last_name }}</td>
+                                    <td>{{ $value->subject_name }}</td>
+                                    <td>{{ $value->subject_type }}</td>
                                     <td>
 
-                                        @if($value->status == 1)
-                                        <span class="label label-success">Active</span>
-                                        @else
-                                        <span class="label label-danger">Inactive</span>
-                                        @endif
                                     </td>
                                     <td>
                                         {{ date('d-m-Y H:i A', strtotime($value->created_at)) }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('panel/assign-teacher/edit/'.$value->id) }}" class="btn btn-default btn-rounded btn-sm"><span class="fa fa-pencil"></span></a>
-                            
-                                        <a href="{{ url('panel/assign-teacher/delete/'.$value->id) }}" onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-rounded btn-sm"><span class="fa fa-times"></span></a>
+                                        <a href="{{ url('teacher/my-class-subjects/timetable/'.$value->class_id.'/'.$value->subject_id) }}" 
+                                            class="btn btn-primary">
+                                            Class Timetable
+                                        </a>
                                     </td>
                                 </tr>
                                 @empty
@@ -112,9 +97,9 @@
                                         <td colspan="100%">Record not found.</td>
                                     </tr>
                                 @endforelse
-                            </tbody>
-                        </table>
 
+                           </tbody>
+                        </table>
 
                     </div>
                 </div>
@@ -124,9 +109,6 @@
             </div>
         </div>
     </div>
-    <!-- END RESPONSIVE TABLES -->
-
-    <!-- END PAGE CONTENT WRAPPER -->
 </div>
 
 @endsection

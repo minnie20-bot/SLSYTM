@@ -9,18 +9,37 @@ class ClassTeacherModel extends Model
 {
     protected $table = 'class_teacher';
 
+    protected $fillable = [
+        'class_id',
+        'teacher_id',
+        'subject_class_id',
+        'status',
+        'created_by_id'
+    ];
+
     static public function getSingle($id)
     {
-        return self::find($id);
+        return self::where('id', $id)
+        ->where('is_delete', 0)
+        ->first();
     }
 
     static function checkClassTeacher($created_by_id, $class_id, $teacher_id)
     {
-        return ClassTeacherModel::where('created_by_id', $created_by_id)
+        return self::where('created_by_id', $created_by_id)
             ->where('class_id', $class_id)
             ->where('teacher_id', $teacher_id)
             ->where('is_delete', 0)
-            ->count();
+            ->first();
+    }
+
+    static function checkClassTeacherSingle($created_by_id, $class_id, $teacher_id)
+    {
+        return self::where('created_by_id', $created_by_id)
+            ->where('class_id', $class_id)
+            ->where('teacher_id', $teacher_id)
+            ->where('is_delete', 0)
+            ->first();
     }
 
     static function getSelectedTeacher($class_id, $created_by_id)
@@ -40,8 +59,38 @@ class ClassTeacherModel extends Model
             ->delete();
     }
 
+    static function getRecordTeacher($teacher_id)
+{
+    $return = self::select(
+        'class_teacher.*',
+        'class.name as class_name',
+        'users.name as teacher_name',
+        'subject.name as subject_name',
+        'subject.type as subject_type',
+        'subject_class.subject_id as subject_id'
+    );
 
+    $return = $return->join('class', 'class.id', '=', 'class_teacher.class_id');
+    $return = $return->join('users', 'users.id', '=', 'class_teacher.teacher_id');
+    $return = $return->leftJoin('subject_class', 'subject_class.id', '=', 'class_teacher.subject_class_id');
+    $return = $return->leftJoin('subject', 'subject.id', '=', 'subject_class.subject_id');
 
+    if (!empty(Request::get('class_name'))) {
+        $return = $return->where('class.name', 'like', '%' . Request::get('class_name') . '%');
+    }
+
+    if (!empty(Request::get('subject_name'))) {
+        $return = $return->where('subject.name', 'like', '%' . Request::get('subject_name') . '%');
+    }
+
+    $return = $return->where('class_teacher.teacher_id', $teacher_id)
+        ->where('class_teacher.is_delete', 0)
+        ->where('class_teacher.status', 1)
+        ->orderBy('class_teacher.id', 'desc')
+        ->paginate(10);
+
+    return $return;
+}
 
 
     static public function getRecord($user_id, $user_type)

@@ -90,19 +90,24 @@ class SubjectController extends Controller
 
     public function insert_assign_subject(Request $request)
     {
-        if(!empty($request->class_id) && !empty($request->subject_id)) 
+        if (!empty($request->class_id) && !empty($request->subject_id)) 
         {
-            foreach($request->subject_id as $subject_id) 
+            foreach ($request->subject_id as $subject_id) 
             {
-                if(!empty($subject_id))    
+                if (!empty($subject_id)) 
                 {
-                    $check = SubjectClassModel::checkClassSubject(Auth::user()->id, $request->class_id, $subject_id);
-                    if(empty($check))
+                    $check = SubjectClassModel::checkClassSubject(
+                        Auth::user()->id,
+                        $request->class_id,
+                        $subject_id
+                    );
+
+                    if (empty($check)) 
                     {
                         $save = new SubjectClassModel();
                         $save->class_id = trim($request->class_id);
-                        $save->subject_id = trim($subject_id);
-                        $save->status = trim($request->status);
+                        $save->subject_id = trim($subject_id); // ✔ string na ito per loop
+                        $save->status = $request->status ?? 0;
                         $save->created_by_id = Auth::user()->id;
                         $save->save();
                     }
@@ -111,13 +116,39 @@ class SubjectController extends Controller
         }
 
         return redirect('panel/assign-subject')->with('success', "Assign Subject Class Successfully Created.");
-
     }
+
+    public function edit_single_assign_subject($id)
+    {
+        $data['getRecord'] = SubjectClassModel::getSingle($id);
+        $data['getClass'] = ClassModels::getRecordActive(Auth::user()->id);
+        $data['getSubject'] = SubjectModels::getRecordActive(Auth::user()->id);
+
+        $data['meta_title'] = "Edit Assign Subject Class";
+        return view('backend.assign_subject.edit_single', $data);
+    }
+
+    public function update_single_assign_subject($id, Request $request)
+{
+    $record = SubjectClassModel::getSingle($id);
+
+    if (!$record) {
+        return redirect()->back()->with('error', 'Record not found.');
+    }
+
+    $record->class_id = trim($request->class_id);
+    $record->subject_id = trim($request->subject_id);
+    $record->status = $request->status ?? 0;
+    $record->save();
+
+    return redirect('panel/assign-subject')
+        ->with('success', "Assign Subject Class Successfully Updated.");
+}
+
 
     public function edit_assign_subject($id)
     {
         $getRecord = SubjectClassModel::getSingle($id);
-
         $data['getRecord'] = $getRecord;
         $data['getClass'] = ClassModels::getRecordActive(Auth::User()->id);
         $data['getSubject'] = SubjectModels::getRecordActive(Auth::User()->id);
@@ -127,30 +158,31 @@ class SubjectController extends Controller
         return view('backend.assign_subject.edit', $data);
     }
 
-    public function update_assign_subject($id, Request $request)
+    public function update_assign_teacher($id, Request $request)
     {
-        if(!empty($request->class_id)) 
-        {
-            SubjectClassModel::deleteClassSubject($request->class_id, Auth::user()->id);
+        if (!empty($request->class_id)) {
 
-            foreach($request->subject_id as $subject_id) 
-            {
-                if(!empty($subject_id))    
-                {
-                    $check = SubjectClassModel::checkClassSubject(Auth::user()->id, $request->class_id, $subject_id);
-                    if(empty($check))
-                    {
-                        $save = new SubjectClassModel();
-                        $save->class_id = trim($request->class_id);
-                        $save->subject_id = trim($subject_id);
-                        $save->status = trim($request->status);
-                        $save->created_by_id = Auth::user()->id;
-                        $save->save();
-                    }
+            SubjectClassModel::where('class_id', $request->class_id)
+                ->where('created_by_id', Auth::user()->id)
+                ->update(['is_delete' => 1]);
+
+            $teachers = (array) $request->teacher_id;
+
+            foreach ($teachers as $teacher_id) {
+
+                if (!empty($teacher_id)) {
+
+                    SubjectClassModel::create([
+                        'class_id' => $request->class_id,
+                        'teacher_id' => $teacher_id,
+                        'status' => $request->status,
+                        'created_by_id' => Auth::user()->id
+                    ]);
                 }
             }
-        }   
-                return redirect('panel/assign-subject')->with('Success', "Assign Subject Class Successfully Updated.");
+        }
+
+        return redirect('panel/assign-subject')->with('success', "Updated Successfully.");
     }
 
     public function delete_assign_subject($id)
@@ -244,7 +276,7 @@ class SubjectController extends Controller
         {
              return redirect()->back()->with('error', "Please Select Class and Subject.");
         }
-        dd($request->all());
+        
     }
 
     public function get_assigned_subject_class(Request $request)
@@ -260,7 +292,7 @@ class SubjectController extends Controller
         }
 
         $json['success'] = $html;
-        echo json_encode($json);
+        return response()->json($getSubject);
     }
 
 

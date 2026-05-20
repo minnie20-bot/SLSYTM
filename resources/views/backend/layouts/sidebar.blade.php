@@ -26,9 +26,15 @@
             <a href="{{ url('panel/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
         </li>
         @elseif(Auth::user()->is_admin == 5)
-         <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
+        <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
             <a href="{{ url('teacher/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
         </li>
+
+        <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
+            <a href="{{ url('teacher/my-class-subjects') }}"><span class="fa fa-user"></span> <span class="xn-text">My Class & Subjects</span></a>
+        </li>
+
+
         @elseif(Auth::user()->is_admin == 6)
          <li class="{{ (Request::segment(2) ==  'dashboard') ? 'active' : '' }}">
             <a href="{{ url('student/dashboard') }}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
@@ -78,7 +84,7 @@
                 <li class="{{ (Request::segment(2) == 'class-timetable') ? 'active' : '' }}"><a href="{{ url('panel/class-timetable') }}"><span class="fa fa-random"></span> Class Timetable</a></li>
 
                 <li class="{{ (Request::segment(2) == 'assign-teacher') ? 'active' : '' }}"><a href="{{ url('panel/assign-teacher') }}"><span class="fa fa-random"></span> Assign Teacher</a></li>
-
+                
             </ul>
         </li>
 
